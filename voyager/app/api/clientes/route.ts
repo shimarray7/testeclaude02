@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { clienteSchema } from '@/lib/validations/cliente'
 
 export async function GET(request: NextRequest) {
   const supabase = await createClient()
@@ -49,9 +50,18 @@ export async function POST(request: NextRequest) {
   if (!profile) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()
+  const parsed = clienteSchema.safeParse(body)
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.flatten() }, { status: 422 })
+  }
+
+  const sanitized = Object.fromEntries(
+    Object.entries(parsed.data).map(([k, v]) => [k, v === '' ? null : v])
+  )
+
   const { data, error } = await supabase
     .from('clients')
-    .insert({ ...body, agency_id: profile.agency_id, created_by: user.id })
+    .insert({ ...sanitized, agency_id: profile.agency_id, created_by: user.id })
     .select()
     .single()
 
