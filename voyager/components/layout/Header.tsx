@@ -69,7 +69,7 @@ export function Header({ fullName, role, onMenuClick }: HeaderProps) {
             <div className="absolute right-0 top-full mt-1 z-20 w-48 rounded-lg border border-gray-200 bg-white shadow-lg py-1">
               <button
                 className="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                onClick={() => { setDropdownOpen(false) }}
+                onClick={() => { setDropdownOpen(false); router.push('/perfil') }}
               >
                 <User className="h-4 w-4" />
                 Meu perfil
