@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-white text-gray-900;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-in {
+    animation-duration: 200ms;
+    animation-timing-function: ease-out;
+    animation-fill-mode: both;
+  }
+
+  .slide-in-from-left {
+    animation-name: slideInFromLeft;
+  }
+
+  @keyframes slideInFromLeft {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(0); }
+  }
+}
